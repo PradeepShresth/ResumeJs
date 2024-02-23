@@ -60,6 +60,7 @@ let socialAvesHeight
 let kulchanHeight
 let freelanceHeight
 let teksewaHeight
+let microcodeHeight
 let skillsBoardWidth
 let hobbiesBoardWidth
 let trainingAndEducationBoardWidth
@@ -72,6 +73,7 @@ let socialAvesWidth
 let kulchanWidth
 let freelanceWidth
 let teksewaWidth
+let microcodeWidth
 
 
 // #region Image sources
@@ -99,6 +101,7 @@ const socialAves = "./img/socialAvesNoEyes.png"
 const kulchan = "./img/kulchan.png"
 const freelance = "./img/freelance.png"
 const teksewa = "./img/teksewa.png"
+const microcode = "./img/microcode.png"
 
 
 // Characters spritesheets
@@ -115,6 +118,7 @@ const coding = "./img/spriteCoding.png"
 const texasEye = "./img/spriteTexasEye.png"
 const socialAvesLEye = "./img/spriteSocialAveLEye.png"
 const socialAvesREye = "./img/spriteSocialAveREye.png"
+const microcodeWeight = "./img/spritesMicrocode.png"
 
 // #endregion
 
@@ -161,6 +165,8 @@ function setObjectDimensions() {
         freelanceHeight = 654
         teksewaWidth = 504
         teksewaHeight = 610
+        microcodeWidth = 680
+        microcodeHeight = 718
     // }
     // else {
     if (window.outerWidth <= 768) {
@@ -199,7 +205,8 @@ function Init(reset) {
             new GenericObject({x: 9860, y: canvas.height - 550, width: socialAvesWidth, height: socialAvesHeight, image: createImage(socialAves)}),
             new GenericObject({x: 10530, y: canvas.height - 460, width: kulchanWidth, height: kulchanHeight, image: createImage(kulchan)}),
             new GenericObject({x: 11020, y: canvas.height - 710, width: freelanceWidth, height: freelanceHeight, image: createImage(freelance)}),
-            new GenericObject({x: 11900, y: canvas.height - 660, width: teksewaWidth, height: teksewaHeight, image: createImage(teksewa)})
+            new GenericObject({x: 11900, y: canvas.height - 660, width: teksewaWidth, height: teksewaHeight, image: createImage(teksewa)}),
+            new GenericObject({x: 200, y: canvas.height - 660, width: microcodeWidth, height: microcodeHeight, image: createImage(microcode)})
         ]
 
         backgroundTrees = new GenericObject({x: 2600, y: 0, width: 13489/(1080/canvas.height), height: canvas.height, image: createImage(backgroundTreesImage)});
@@ -490,7 +497,8 @@ let genericObjects = [
     new GenericObject({x: 9860, y: canvas.height - 550, width: socialAvesWidth, height: socialAvesHeight, image: createImage(socialAves)}),
     new GenericObject({x: 10530, y: canvas.height - 460, width: kulchanWidth, height: kulchanHeight, image: createImage(kulchan)}),
     new GenericObject({x: 11020, y: canvas.height - 710, width: freelanceWidth, height: freelanceHeight, image: createImage(freelance)}),
-    new GenericObject({x: 11900, y: canvas.height - 660, width: teksewaWidth, height: teksewaHeight, image: createImage(teksewa)})
+    new GenericObject({x: 11900, y: canvas.height - 660, width: teksewaWidth, height: teksewaHeight, image: createImage(teksewa)}),
+    new GenericObject({x: 12500, y: canvas.height - 720, width: microcodeWidth, height: microcodeHeight, image: createImage(microcode)})
 ]
 
 let backgroundTrees = new GenericObject({x: 2600, y: 0, width: 13489/(1080/canvas.height), height: canvas.height, image: createImage(backgroundTreesImage)});
@@ -504,7 +512,8 @@ let skills = [
     new Skill({x: 9928, y: canvas.height - 282, image: createImage(socialAvesLEye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
     new Skill({x: 10003, y: canvas.height - 282, image: createImage(socialAvesLEye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
     new Skill({x: 10153, y: canvas.height - 290, image: createImage(socialAvesREye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
-    new Skill({x: 10230, y: canvas.height - 290, image: createImage(socialAvesREye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210})
+    new Skill({x: 10230, y: canvas.height - 290, image: createImage(socialAvesREye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
+    new Skill({x: 12619, y: canvas.height - 430, image: createImage(microcodeWeight), cropWidth: 425, cropHeight: 250, width: 425, height: 250, lastFrame: 110})
 ]
 
 const keys = {
