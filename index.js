@@ -493,7 +493,7 @@ let backgroundTrees = new GenericObject({x: 2600, y: 0, width: 13489/(1080/canva
 let background = new GenericObject({x: 0, y: 0, width: 13282, height: canvas.height, image: createImage(backgroundImage)});
 
 let skills = [
-    new Skill({x: 2930, y: canvas.height - 720, image: createImage(coding), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 90}),
+    new Skill({x: 200, y: canvas.height - 720, image: createImage(coding), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 90}),
     new Skill({x: 4280, y: canvas.height - 810, image: createImage(animation), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 90}),
     new Skill({x: 8080, y: canvas.height - 276, image: createImage(texasEye), cropWidth: 50, cropHeight: 50, width: 50, height: 50, lastFrame: 60}),
     new Skill({x: 8140, y: canvas.height - 276, image: createImage(texasEye), cropWidth: 50, cropHeight: 50, width: 50, height: 50, lastFrame: 60}),
