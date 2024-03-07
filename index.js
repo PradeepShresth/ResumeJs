@@ -171,7 +171,7 @@ function setObjectDimensions() {
     // else {
     if (window.outerWidth <= 768) {
         jumpHeight = -18
-        playerController.style.display = "block"
+        // playerController.style.display = "block"
         instructionEl.textContent = 'Use the controller in the bottom right side to move'
     }
 }
@@ -872,9 +872,49 @@ addEventListener('keyup', ({key}) => {
     }
 })
 
+document.body.querySelector('.leftbutton').addEventListener('mousedown', () => {
+    keys.right.pressed = false
+    keys.left.pressed = true
+    lastKey = 'left'
+    playerDirection = "left"
+    instructionEl.style.display = 'none';
+});
+
+document.body.querySelector('.rightbutton').addEventListener('mousedown', () => {
+    keys.left.pressed = false
+    keys.right.pressed = true
+    lastKey = 'right'
+    playerDirection = "right"
+    instructionEl.style.display = 'none';
+});
+
+document.body.querySelector('.upbutton').addEventListener('click', () => {
+    if (player && player.jumpCount < 1)
+    {
+        player.velocity.y = jumpHeight
+        keys.up.pressed = true
+        player.jumpCount++
+        instructionEl.style.display = 'none';
+    }
+});
+
+document.body.querySelector('.leftbutton').addEventListener('mouseup', () => {
+    initialX = 0
+    initialY = 0
+    keys.left.pressed = false
+    keys.right.pressed = false
+});
+
+document.body.querySelector('.rightbutton').addEventListener('mouseup', () => {
+    initialX = 0
+    initialY = 0
+    keys.left.pressed = false
+    keys.right.pressed = false
+});
+
 function touchHandler(e) {
     if(e.touches) {
-        playerControllerPointer.style.display = "block"
+        // playerControllerPointer.style.display = "block"
         if (e.touches[0].pageY > playerController.getBoundingClientRect().y &&
             e.touches[0].pageY < playerController.getBoundingClientRect().y + 230 &&
             e.touches[0].pageX < playerController.getBoundingClientRect().x + 300 &&

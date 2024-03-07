@@ -63,45 +63,26 @@
         z-index: 100;
         display: none;
     }
-    .ltBtn {
-        background: rgba(0, 0, 0, 0.150);
-        border-radius: 50%;
-        font-size: 30px;
-        color: rgb(237, 237, 237);
-        border: none;
-        width: 80px;
-        height: 80px;
+    .controlButton {
+        z-index: 100;
         position:absolute;
-        left: 75%;
-        bottom: 10%;
+        /* display: none; */
     }
-    .rtBtn {
-        background: rgba(0, 0, 0, 0.150);
-        border-radius: 50%;
-        font-size: 30px;
-        color: rgb(237, 237, 237);
-        border: none;
-        width: 80px;
-        height: 80px;
-        position:absolute;
-        left: 85%;
-        bottom: 10%;
+
+    .upbutton {
+        right: 10%;
+        bottom: 3%;
     }
-    .jumpBtn {
-        background: rgba(0, 0, 0, 0.150);
-        border-radius: 50%;
-        font-size: 30px;
-        color: rgb(237, 237, 237);
-        border: none;
-        width: 80px;
-        height: 80px;
-        position:absolute;
+
+    .leftbutton {
         left: 10%;
-        bottom: 10%;
+        bottom: 3%;
     }
-    .ltBtn:active{background-color:rgba(255, 52, 52, 0.696);}
-    .rtBtn:active{background-color:rgba(255, 52, 52, 0.696);}
-    .jumpBtn:active{background-color:rgba(255, 52, 52, 0.696);}
+
+    .rightbutton {
+        left: 20%;
+        bottom: 3%;
+    }
     
     .rain-container, .fire-fly-container {
         position: absolute;
