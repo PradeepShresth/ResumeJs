@@ -16,15 +16,10 @@ const emitEvent = (isOpen, orientation) => {
 
 const canvas = document.querySelector('canvas')
 const ctx = canvas.getContext("2d")
-const playerController = document.querySelector('.playerController')
-const playerControllerPointer = document.querySelector('.playerControllerPointer')
 const divContainer = document.querySelector('.canvas-container')
 const rainContainer = document.querySelector('.rain-container')
 const fireFlyContainer = document.querySelector('.fire-fly-container')
 const instructionEl = document.querySelector('.instruction')
-playerController.addEventListener("touchstart", touchHandler);
-playerController.addEventListener("touchmove", touchHandler);
-playerController.addEventListener("touchend", touchEndHandler);
 
 const gravity = 0.5
 
@@ -171,8 +166,7 @@ function setObjectDimensions() {
     // else {
     if (window.outerWidth <= 768) {
         jumpHeight = -18
-        // playerController.style.display = "block"
-        instructionEl.textContent = 'Use the controller in the bottom right side to move'
+        instructionEl.textContent = 'Use the controllers in the bottom to move'
     }
 }
 
@@ -194,11 +188,11 @@ function Init(reset) {
 
         genericObjects = [
             new GenericObject({x: 2600, y: canvas.height - 310, width: skillsBoardWidth, height: skillsBoardHeight, image: createImage(skillsBoard)}),
-            new GenericObject({x: 4180, y: canvas.height - 320, width: hobbiesBoardWidth, height: hobbiesBoardHeight, image: createImage(hobbiesBoard)}),
+            new GenericObject({x: 3500, y: canvas.height - 320, width: hobbiesBoardWidth, height: hobbiesBoardHeight, image: createImage(hobbiesBoard)}),
             new GenericObject({x: 6700, y: canvas.height - 400, width: trainingAndEducationBoardWidth, height: trainingAndEducationBoardHeight, image: createImage(trainingAndEducationBoard)}),
             new GenericObject({x: 9460, y: canvas.height - 320, width: experienceBoardWidth, height: experienceBoardHeight, image: createImage(experienceBoard)}),
-
-            new GenericObject({x: 4420, y: canvas.height - 420, width: hobbiesHouseWidth, height: hobbiesHouseHeight, image: createImage(hobbiesHouse)}),
+        
+            new GenericObject({x: 3720, y: canvas.height - 420, width: hobbiesHouseWidth, height: hobbiesHouseHeight, image: createImage(hobbiesHouse)}),
             new GenericObject({x: 4920, y: canvas.height - 470, width: hobbiestypesWidth, height: hobbiestypesHeight, image: createImage(hobbiestypes)}),
             new GenericObject({x: 7100, y: canvas.height - 630, width: pentasoftWidth, height: pentasoftHeight, image: createImage(pentasoft)}),
             new GenericObject({x: 7890, y: canvas.height - 560, width: texasWidth, height: texasHeight, image: createImage(texas)}),
@@ -206,21 +200,22 @@ function Init(reset) {
             new GenericObject({x: 10530, y: canvas.height - 460, width: kulchanWidth, height: kulchanHeight, image: createImage(kulchan)}),
             new GenericObject({x: 11020, y: canvas.height - 710, width: freelanceWidth, height: freelanceHeight, image: createImage(freelance)}),
             new GenericObject({x: 11900, y: canvas.height - 660, width: teksewaWidth, height: teksewaHeight, image: createImage(teksewa)}),
-            new GenericObject({x: 200, y: canvas.height - 660, width: microcodeWidth, height: microcodeHeight, image: createImage(microcode)})
+            new GenericObject({x: 12500, y: canvas.height - 720, width: microcodeWidth, height: microcodeHeight, image: createImage(microcode)})
         ]
 
         backgroundTrees = new GenericObject({x: 2600, y: 0, width: 13489/(1080/canvas.height), height: canvas.height, image: createImage(backgroundTreesImage)});
         background = new GenericObject({x: 0, y: 0, width: 13282, height: canvas.height, image: createImage(backgroundImage)});
 
         skills = [
-            new Skill({x: 2930, y: canvas.height - 720, image: createImage(coding), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 68}),
-            new Skill({x: 4280, y: canvas.height - 670, image: createImage(animation), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 90}),
+            new Skill({x: 2930, y: canvas.height - 720, image: createImage(coding), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 90}),
+            new Skill({x: 4280, y: canvas.height - 810, image: createImage(animation), cropWidth: 500, cropHeight: 500, width: 500, height: 500, lastFrame: 90}),
             new Skill({x: 8080, y: canvas.height - 276, image: createImage(texasEye), cropWidth: 50, cropHeight: 50, width: 50, height: 50, lastFrame: 60}),
             new Skill({x: 8140, y: canvas.height - 276, image: createImage(texasEye), cropWidth: 50, cropHeight: 50, width: 50, height: 50, lastFrame: 60}),
             new Skill({x: 9928, y: canvas.height - 282, image: createImage(socialAvesLEye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
             new Skill({x: 10003, y: canvas.height - 282, image: createImage(socialAvesLEye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
             new Skill({x: 10153, y: canvas.height - 290, image: createImage(socialAvesREye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
-            new Skill({x: 10230, y: canvas.height - 290, image: createImage(socialAvesREye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210})
+            new Skill({x: 10230, y: canvas.height - 290, image: createImage(socialAvesREye), cropWidth: 45, cropHeight: 50, width: 45, height: 50, lastFrame: 210}),
+            new Skill({x: 12619, y: canvas.height - 430, image: createImage(microcodeWeight), cropWidth: 425, cropHeight: 250, width: 425, height: 250, lastFrame: 110})
         ]
     }
     
@@ -484,7 +479,6 @@ let platforms = [
 ]
 
 let genericObjects = [
-    //new GenericObject({x: 0, y: 0, width: 16000/(1080/canvas.height), height: canvas.height, image: createImage(background)}),
     new GenericObject({x: 2600, y: canvas.height - 310, width: skillsBoardWidth, height: skillsBoardHeight, image: createImage(skillsBoard)}),
     new GenericObject({x: 3500, y: canvas.height - 320, width: hobbiesBoardWidth, height: hobbiesBoardHeight, image: createImage(hobbiesBoard)}),
     new GenericObject({x: 6700, y: canvas.height - 400, width: trainingAndEducationBoardWidth, height: trainingAndEducationBoardHeight, image: createImage(trainingAndEducationBoard)}),
@@ -872,20 +866,20 @@ addEventListener('keyup', ({key}) => {
     }
 })
 
-document.body.querySelector('.leftbutton').addEventListener('mousedown', () => {
+document.body.querySelector('.leftbutton').addEventListener('pointerdown', () => {
     keys.right.pressed = false
     keys.left.pressed = true
     lastKey = 'left'
     playerDirection = "left"
-    instructionEl.style.display = 'none';
+    instructionEl.style.display = 'none'
 });
 
-document.body.querySelector('.rightbutton').addEventListener('mousedown', () => {
+document.body.querySelector('.rightbutton').addEventListener('pointerdown', () => {
     keys.left.pressed = false
     keys.right.pressed = true
     lastKey = 'right'
     playerDirection = "right"
-    instructionEl.style.display = 'none';
+    instructionEl.style.display = 'none'
 });
 
 document.body.querySelector('.upbutton').addEventListener('click', () => {
@@ -894,67 +888,23 @@ document.body.querySelector('.upbutton').addEventListener('click', () => {
         player.velocity.y = jumpHeight
         keys.up.pressed = true
         player.jumpCount++
-        instructionEl.style.display = 'none';
+        instructionEl.style.display = 'none'
     }
 });
 
-document.body.querySelector('.leftbutton').addEventListener('mouseup', () => {
+document.body.querySelector('.leftbutton').addEventListener('pointerup', () => {
     initialX = 0
     initialY = 0
     keys.left.pressed = false
     keys.right.pressed = false
 });
 
-document.body.querySelector('.rightbutton').addEventListener('mouseup', () => {
+document.body.querySelector('.rightbutton').addEventListener('pointerup', () => {
     initialX = 0
     initialY = 0
     keys.left.pressed = false
     keys.right.pressed = false
 });
-
-function touchHandler(e) {
-    if(e.touches) {
-        // playerControllerPointer.style.display = "block"
-        if (e.touches[0].pageY > playerController.getBoundingClientRect().y &&
-            e.touches[0].pageY < playerController.getBoundingClientRect().y + 230 &&
-            e.touches[0].pageX < playerController.getBoundingClientRect().x + 300 &&
-            e.touches[0].pageX > playerController.getBoundingClientRect().x) {
-            playerControllerPointer.style.left = (e.touches[0].pageX - canvas.offsetLeft - 50)
-            playerControllerPointer.style.top = (e.touches[0].pageY - canvas.offsetTop - 50)
-        }
-        
-        if (e.touches[0].pageX > playerController.getBoundingClientRect().x + 200) {
-            keys.left.pressed = false
-            keys.right.pressed = true
-            lastKey = 'right'
-            playerDirection = "right"
-        }
-        else if (e.touches[0].pageX < playerController.getBoundingClientRect().x + 100) {
-            keys.right.pressed = false
-            keys.left.pressed = true
-            lastKey = 'left'
-            playerDirection = "left"
-        }
-        if (e.touches[0].pageY < playerController.getBoundingClientRect().y + 50) {
-            if (player && player.jumpCount < 1)
-            {
-                player.velocity.y = jumpHeight
-                keys.up.pressed = true
-                player.jumpCount++
-            }
-        }
-        instructionEl.style.display = 'none';
-        e.preventDefault();
-    }
-}
-
-function touchEndHandler() {
-    initialX = 0
-    initialY = 0
-    keys.left.pressed = false
-    keys.right.pressed = false
-    playerControllerPointer.style.display = "none"
-}
 
 function rainDrop(rainLocation) {
     let amount = 80

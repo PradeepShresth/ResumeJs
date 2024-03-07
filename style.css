@@ -46,27 +46,11 @@
         width: 30px;
         padding: 12px;
     }
-
-    .playerController { 
-        width: 302px;
-        height: 234px;
-        position:absolute;
-        left: 65%;
-        bottom: 10%;
-        z-index: 90;
-        display: none;
-    }
-    .playerControllerPointer { 
-        width: 100px;
-        height: 100px;
-        position:absolute;
-        z-index: 100;
-        display: none;
-    }
+    
     .controlButton {
         z-index: 100;
         position:absolute;
-        /* display: none; */
+        display: none;
     }
 
     .upbutton {
