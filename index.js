@@ -166,7 +166,11 @@ function setObjectDimensions() {
     // else {
     if (window.outerWidth <= 768) {
         jumpHeight = -18
+        document.body.querySelectorAll('.controlButton').forEach(element => element.style.display = "block");
         instructionEl.textContent = 'Use the controllers in the bottom to move'
+    }
+    else {
+        document.body.querySelectorAll('.controlButton').forEach(element => element.style.display = "none");
     }
 }
 
@@ -554,247 +558,237 @@ function animate() {
     main({emitEvents: false});
     setInterval(main, 500);
 
-    // if (devtools.isOpen) {
-    //     ctx.clearRect(0, 0, canvas.width, canvas.height)
-    //     ctx.font = "30px Arial";
-    //     ctx.textAlign = "center";
-    //     ctx.fillText("You Naughty Naughty", canvas.width/2, canvas.height/2);
-    //     requestAnimationFrame(animate);
-    //     instructionEl.style.display = 'none';
-    // }
-    // else {
-        if (player.position.x === 100 && displayInstruction) {
-            instructionEl.style.display = 'block';
-        }
-        let now = Date.now();
-        let dt = now - lastTime;
+    if (player.position.x === 100 && displayInstruction) {
+        instructionEl.style.display = 'block';
+    }
+    let now = Date.now();
+    let dt = now - lastTime;
+    
+    t.unshift(now);
+    if (t.length > 10) {
+        var t0 = t.pop();
+        fps = Math.floor(1000 * 10 / (now - t0));
         
-        t.unshift(now);
-        if (t.length > 10) {
-            var t0 = t.pop();
-            fps = Math.floor(1000 * 10 / (now - t0));
-            
-            // Check conditions to set speed
-            if (fps <= 60) {
-                player.speed = 8
-            }
-            else if (fps <= 120) {
-                player.speed = 9
-            }
-            else if (fps <= 180) {
-                player.speed = 10
-            }
-            else if (fps <= 240) {
-                player.speed = 11
-            }
-            else {
-                player.speed = 12
-            }
+        // Check conditions to set speed
+        if (fps <= 60) {
+            player.speed = 8
         }
-        requestAnimationFrame(animate)
-
-        ctx.fillStyle = "white"
-        ctx.fillRect(0, 0, canvas.width, canvas.height)
-        background.draw()
-        backgroundTrees.draw()
-        genericObjects.forEach(genericObject => {
-            genericObject.draw()
-        })
-        platforms.forEach(platform => {
-            platform.draw()
-        })
-        skills.forEach(skill => {
-            skill.draw(dt)
-        })
-        player.update(dt)
-
-        if (keys.right.pressed && 
-            (
-                player.position.x < 400 || 
-                ((platforms[platforms.length - 1].position.x + groundPlatformWidthLevel4 - canvas.width < 100) && player.width + player.position.x < canvas.width)
-            )) {
-            player.velocity.x = player.speed
-            keys.right.pressed = true
-            lastKey = 'right'
-            playerDirection = "right"
+        else if (fps <= 120) {
+            player.speed = 9
         }
-        else if ((keys.left.pressed && player.position.x > 100) ||
-        (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)) {
-            player.velocity.x = -player.speed
-            keys.left.pressed = true
-            lastKey = 'left'
-            playerDirection = "left"
+        else if (fps <= 180) {
+            player.speed = 10
+        }
+        else if (fps <= 240) {
+            player.speed = 11
         }
         else {
-            player.velocity.x = 0
-            
-            if ((fps <= 60 && dt > 12) ||
-            (fps <= 120 && dt > 14) ||
-            (fps <= 180 && dt > 16) || 
-            (fps <= 240 && dt > 18) ||
-            (fps > 240 && dt > 20)) {
-                if (keys.right.pressed && player.width + player.position.x < canvas.width) {
-                    scrollOffset += player.speed
-                    platforms.forEach(platform => {
-                        platform.position.x -= player.speed
-                    })
+            player.speed = 12
+        }
+    }
+    requestAnimationFrame(animate)
 
-                    skills.forEach(skill => {
-                        skill.position.x -= player.speed
-                    })
-                    
-                    if (background.width + background.position.x - player.speed > canvas.width) {
-                        background.position.x -= player.speed;
-                    }
-                    if (backgroundTrees.width + backgroundTrees.position.x - player.speed > canvas.width + 200) {
-                        backgroundTrees.position.x -= player.speed * 0.97;
-                    }
-                    genericObjects.forEach(genericObject => {
-                        genericObject.position.x -= player.speed
-                    })
+    ctx.fillStyle = "white"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    background.draw()
+    backgroundTrees.draw()
+    genericObjects.forEach(genericObject => {
+        genericObject.draw()
+    })
+    platforms.forEach(platform => {
+        platform.draw()
+    })
+    skills.forEach(skill => {
+        skill.draw(dt)
+    })
+    player.update(dt)
 
-                    if (genericObjects[3].position.x - 200 <= canvas.width) {
-                        shiftRain -= player.speed
-                        rainContainer.style.transform = "translateX(" + (shiftRain) + "px)";
-                    }
-                    if (genericObjects[11].position.x - 200 <= canvas.width){
-                        shiftFireflies -= player.speed
-                        fireFlyContainer.style.transform = "translateX(" + (shiftFireflies) + "px)";
-                    }
-                }
+    if (keys.right.pressed && 
+        (
+            player.position.x < 400 || 
+            ((platforms[platforms.length - 1].position.x + groundPlatformWidthLevel4 - canvas.width < 100) && player.width + player.position.x < canvas.width)
+        )) {
+        player.velocity.x = player.speed
+        keys.right.pressed = true
+        lastKey = 'right'
+        playerDirection = "right"
+    }
+    else if ((keys.left.pressed && player.position.x > 100) ||
+    (keys.left.pressed && scrollOffset === 0 && player.position.x > 0)) {
+        player.velocity.x = -player.speed
+        keys.left.pressed = true
+        lastKey = 'left'
+        playerDirection = "left"
+    }
+    else {
+        player.velocity.x = 0
         
-                else if (keys.left.pressed && scrollOffset > 0) {
-                    scrollOffset -= player.speed
-                    platforms.forEach(platform => {
-                        platform.position.x += player.speed
-                    })
+        if ((fps <= 60 && dt > 12) ||
+        (fps <= 120 && dt > 14) ||
+        (fps <= 180 && dt > 16) || 
+        (fps <= 240 && dt > 18) ||
+        (fps > 240 && dt > 20)) {
+            if (keys.right.pressed && player.width + player.position.x < canvas.width) {
+                scrollOffset += player.speed
+                platforms.forEach(platform => {
+                    platform.position.x -= player.speed
+                })
 
-                    skills.forEach(skill => {
-                        skill.position.x += player.speed
-                    })
+                skills.forEach(skill => {
+                    skill.position.x -= player.speed
+                })
+                
+                if (background.width + background.position.x - player.speed > canvas.width) {
+                    background.position.x -= player.speed;
+                }
+                if (backgroundTrees.width + backgroundTrees.position.x - player.speed > canvas.width + 200) {
+                    backgroundTrees.position.x -= player.speed * 0.97;
+                }
+                genericObjects.forEach(genericObject => {
+                    genericObject.position.x -= player.speed
+                })
 
-                    if (background.position.x <= -15) {
-                        background.position.x += player.speed * 0.8
-                    }
-                    if (backgroundTrees.position.x + player.speed * 0.97 < 2600) {
-                        backgroundTrees.position.x += player.speed * 0.97
-                    }
-                    genericObjects.forEach(genericObject => {
-                        genericObject.position.x += player.speed
-                    })
-                    if (genericObjects[3].position.x - 200 <= canvas.width) {
-                        shiftRain += player.speed
-                        rainContainer.style.transform = "translateX(" + (shiftRain) + "px)";
-                    }
-                    if (genericObjects[11].position.x - 200 <= canvas.width){
-                        shiftFireflies += player.speed
-                        fireFlyContainer.style.transform = "translateX(" + (shiftFireflies) + "px)";
-                    }
+                if (genericObjects[3].position.x - 200 <= canvas.width) {
+                    shiftRain -= player.speed
+                    rainContainer.style.transform = "translateX(" + (shiftRain) + "px)";
+                }
+                if (genericObjects[11].position.x - 200 <= canvas.width){
+                    shiftFireflies -= player.speed
+                    fireFlyContainer.style.transform = "translateX(" + (shiftFireflies) + "px)";
                 }
             }
-        } 
+    
+            else if (keys.left.pressed && scrollOffset > 0) {
+                scrollOffset -= player.speed
+                platforms.forEach(platform => {
+                    platform.position.x += player.speed
+                })
 
-        // platform collision detection
-        platforms.forEach(platform => {
-            if (
-                (player.position.y + player.height <= platform.position.y + 55) && 
-                (player.position.y + player.height + player.velocity.y >= platform.position.y + 55) && 
-                (player.position.x + player.width >= platform.position.x) && 
-                (player.position.x <= platform.position.x + platform.width)
-            ) {
-                player.velocity.y = 0
-                player.jumpCount = 0
-                keys.up.pressed = false
-                if (playerDirection === "right") {
-                    player.currentSprite = player.sprites.stand.right
-                    player.currentCropWidth = player.sprites.stand.cropWidth
-                    player.width = player.sprites.stand.width
+                skills.forEach(skill => {
+                    skill.position.x += player.speed
+                })
+
+                if (background.position.x <= -15) {
+                    background.position.x += player.speed * 0.8
                 }
-                else if (playerDirection === "left") {
-                    player.currentSprite = player.sprites.stand.left
-                    player.currentCropWidth = player.sprites.stand.cropWidth
-                    player.width = player.sprites.stand.width
+                if (backgroundTrees.position.x + player.speed * 0.97 < 2600) {
+                    backgroundTrees.position.x += player.speed * 0.97
+                }
+                genericObjects.forEach(genericObject => {
+                    genericObject.position.x += player.speed
+                })
+                if (genericObjects[3].position.x - 200 <= canvas.width) {
+                    shiftRain += player.speed
+                    rainContainer.style.transform = "translateX(" + (shiftRain) + "px)";
+                }
+                if (genericObjects[11].position.x - 200 <= canvas.width){
+                    shiftFireflies += player.speed
+                    fireFlyContainer.style.transform = "translateX(" + (shiftFireflies) + "px)";
                 }
             }
-        })
+        }
+    } 
 
-        //Sprite Switching
-        if (keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.run.right && !keys.up.pressed) {
-            player.currentSprite = player.sprites.run.right
-            player.currentCropWidth = player.sprites.run.cropWidth
-            player.width = player.sprites.run.width
+    // platform collision detection
+    platforms.forEach(platform => {
+        if (
+            (player.position.y + player.height <= platform.position.y + 55) && 
+            (player.position.y + player.height + player.velocity.y >= platform.position.y + 55) && 
+            (player.position.x + player.width >= platform.position.x) && 
+            (player.position.x <= platform.position.x + platform.width)
+        ) {
+            player.velocity.y = 0
+            player.jumpCount = 0
+            keys.up.pressed = false
+            if (playerDirection === "right") {
+                player.currentSprite = player.sprites.stand.right
+                player.currentCropWidth = player.sprites.stand.cropWidth
+                player.width = player.sprites.stand.width
+            }
+            else if (playerDirection === "left") {
+                player.currentSprite = player.sprites.stand.left
+                player.currentCropWidth = player.sprites.stand.cropWidth
+                player.width = player.sprites.stand.width
+            }
         }
-        else if (keys.left.pressed && lastKey === 'left' && player.currentSprite != player.sprites.run.left && !keys.up.pressed) {
-            player.currentSprite = player.sprites.run.left
-            player.currentCropWidth = player.sprites.run.cropWidth
-            player.width = player.sprites.run.width
-        }
-        else if (!keys.left.pressed && lastKey === 'left' && player.currentSprite != player.sprites.stand.left && !keys.up.pressed) {
-            player.currentSprite = player.sprites.stand.left
-            player.currentCropWidth = player.sprites.stand.cropWidth
-            player.width = player.sprites.stand.width
-        }
-        else if (!keys.right.pressed && lastKey === 'right' && player.currentSprite != player.sprites.stand.right && !keys.up.pressed) {
-            player.currentSprite = player.sprites.stand.right
-            player.currentCropWidth = player.sprites.stand.cropWidth
-            player.width = player.sprites.stand.width
-        }
-        else if (keys.up.pressed && playerDirection === "right") {
-            player.currentSprite = player.sprites.jump.right
-            player.currentCropWidth = player.sprites.jump.cropWidth
-            player.width = player.sprites.jump.width
-        }
-        else if (keys.up.pressed && playerDirection === "left") {
-            player.currentSprite = player.sprites.jump.left
-            player.currentCropWidth = player.sprites.jump.cropWidth
-            player.width = player.sprites.jump.width
-        }
+    })
 
-        // Environment Effects Enable
-        if (genericObjects[3].position.x - 200 <= canvas.width) {
-            rainContainer.style.display = 'block'
-            let rainDropEl = document.querySelectorAll('.rain-drop')
-            if (rainDropEl.length == 0) {
-                makeItRain()
-            }
-        }
-        else {
-            rainContainer.style.display = 'none'
-            let rainDropEl = document.querySelectorAll('.rain-drop')
-            let rainSplashEl = document.querySelectorAll('.rain-splash-container')
-            if (rainDropEl.length > 0) {
-                rainDropEl.forEach(element => {
-                    element.remove()
-                })
-            }
-            if (rainSplashEl.length > 0) {
-                rainSplashEl.forEach(element => {
-                    element.remove()
-                })
-            }
-        }
-        if (genericObjects[11].position.x - 200 <= canvas.width) {
-            fireFlyContainer.style.display = 'block'
-            let fireFlyEl = document.querySelectorAll('.fire-fly')
-            if (fireFlyEl.length == 0) {
-                simulateFireflies()
-            }
-        }
-        else {
-            fireFlyContainer.style.display = 'none'
-            let fireFlyEl = document.querySelectorAll('.fire-fly')
-            if (fireFlyEl.length > 0) {
-                fireFlyEl.forEach(element => {
-                    element.remove()
-                })
-            }
-        }
+    //Sprite Switching
+    if (keys.right.pressed && lastKey === 'right' && player.currentSprite !== player.sprites.run.right && !keys.up.pressed) {
+        player.currentSprite = player.sprites.run.right
+        player.currentCropWidth = player.sprites.run.cropWidth
+        player.width = player.sprites.run.width
+    }
+    else if (keys.left.pressed && lastKey === 'left' && player.currentSprite != player.sprites.run.left && !keys.up.pressed) {
+        player.currentSprite = player.sprites.run.left
+        player.currentCropWidth = player.sprites.run.cropWidth
+        player.width = player.sprites.run.width
+    }
+    else if (!keys.left.pressed && lastKey === 'left' && player.currentSprite != player.sprites.stand.left && !keys.up.pressed) {
+        player.currentSprite = player.sprites.stand.left
+        player.currentCropWidth = player.sprites.stand.cropWidth
+        player.width = player.sprites.stand.width
+    }
+    else if (!keys.right.pressed && lastKey === 'right' && player.currentSprite != player.sprites.stand.right && !keys.up.pressed) {
+        player.currentSprite = player.sprites.stand.right
+        player.currentCropWidth = player.sprites.stand.cropWidth
+        player.width = player.sprites.stand.width
+    }
+    else if (keys.up.pressed && playerDirection === "right") {
+        player.currentSprite = player.sprites.jump.right
+        player.currentCropWidth = player.sprites.jump.cropWidth
+        player.width = player.sprites.jump.width
+    }
+    else if (keys.up.pressed && playerDirection === "left") {
+        player.currentSprite = player.sprites.jump.left
+        player.currentCropWidth = player.sprites.jump.cropWidth
+        player.width = player.sprites.jump.width
+    }
 
-        // Reset if fall
-        if (player.position.y > canvas.height) {
-            Init(true)
+    // Environment Effects Enable
+    if (genericObjects[3].position.x - 200 <= canvas.width) {
+        rainContainer.style.display = 'block'
+        let rainDropEl = document.querySelectorAll('.rain-drop')
+        if (rainDropEl.length == 0) {
+            makeItRain()
         }
-    // }
+    }
+    else {
+        rainContainer.style.display = 'none'
+        let rainDropEl = document.querySelectorAll('.rain-drop')
+        let rainSplashEl = document.querySelectorAll('.rain-splash-container')
+        if (rainDropEl.length > 0) {
+            rainDropEl.forEach(element => {
+                element.remove()
+            })
+        }
+        if (rainSplashEl.length > 0) {
+            rainSplashEl.forEach(element => {
+                element.remove()
+            })
+        }
+    }
+    if (genericObjects[11].position.x - 200 <= canvas.width) {
+        fireFlyContainer.style.display = 'block'
+        let fireFlyEl = document.querySelectorAll('.fire-fly')
+        if (fireFlyEl.length == 0) {
+            simulateFireflies()
+        }
+    }
+    else {
+        fireFlyContainer.style.display = 'none'
+        let fireFlyEl = document.querySelectorAll('.fire-fly')
+        if (fireFlyEl.length > 0) {
+            fireFlyEl.forEach(element => {
+                element.remove()
+            })
+        }
+    }
+
+    // Reset if fall
+    if (player.position.y > canvas.height) {
+        Init(true)
+    }
 }
 
 animate()
@@ -871,6 +865,7 @@ document.body.querySelector('.leftbutton').addEventListener('pointerdown', () =>
     keys.left.pressed = true
     lastKey = 'left'
     playerDirection = "left"
+    displayInstruction = false
     instructionEl.style.display = 'none'
 });
 
@@ -879,6 +874,7 @@ document.body.querySelector('.rightbutton').addEventListener('pointerdown', () =
     keys.right.pressed = true
     lastKey = 'right'
     playerDirection = "right"
+    displayInstruction = false
     instructionEl.style.display = 'none'
 });
 
@@ -888,6 +884,7 @@ document.body.querySelector('.upbutton').addEventListener('click', () => {
         player.velocity.y = jumpHeight
         keys.up.pressed = true
         player.jumpCount++
+        displayInstruction = false
         instructionEl.style.display = 'none'
     }
 });
