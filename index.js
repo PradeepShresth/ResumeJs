@@ -860,25 +860,25 @@ addEventListener('keyup', ({key}) => {
     }
 })
 
-document.body.querySelector('.leftbutton').addEventListener('pointerdown', () => {
+function moveLeftMobile() {
     keys.right.pressed = false
     keys.left.pressed = true
     lastKey = 'left'
     playerDirection = "left"
     displayInstruction = false
     instructionEl.style.display = 'none'
-});
+}
 
-document.body.querySelector('.rightbutton').addEventListener('pointerdown', () => {
+function moveRightMobile() {
     keys.left.pressed = false
     keys.right.pressed = true
     lastKey = 'right'
     playerDirection = "right"
     displayInstruction = false
     instructionEl.style.display = 'none'
-});
+}
 
-document.body.querySelector('.upbutton').addEventListener('click', () => {
+function jumpMobile() {
     if (player && player.jumpCount < 1)
     {
         player.velocity.y = jumpHeight
@@ -887,20 +887,33 @@ document.body.querySelector('.upbutton').addEventListener('click', () => {
         displayInstruction = false
         instructionEl.style.display = 'none'
     }
-});
+}
 
-document.body.querySelector('.leftbutton').addEventListener('pointerup', () => {
+function stopMovingMobile() {
     initialX = 0
     initialY = 0
     keys.left.pressed = false
     keys.right.pressed = false
+}
+
+document.body.querySelector('.leftbutton').addEventListener('touchstart', () => {
+    moveLeftMobile()
 });
 
-document.body.querySelector('.rightbutton').addEventListener('pointerup', () => {
-    initialX = 0
-    initialY = 0
-    keys.left.pressed = false
-    keys.right.pressed = false
+document.body.querySelector('.leftbutton').addEventListener('touchend', () => {
+    stopMovingMobile()
+});
+
+document.body.querySelector('.rightbutton').addEventListener('touchstart', () => {
+    moveRightMobile()
+});
+
+document.body.querySelector('.rightbutton').addEventListener('touchend', () => {
+    stopMovingMobile()
+});
+
+document.body.querySelector('.upbutton').addEventListener('click', () => {
+    jumpMobile()
 });
 
 function rainDrop(rainLocation) {
