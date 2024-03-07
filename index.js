@@ -898,18 +898,22 @@ function stopMovingMobile() {
 
 document.body.querySelector('.leftbutton').addEventListener('touchstart', () => {
     moveLeftMobile()
+    preventDefault()
 });
 
 document.body.querySelector('.leftbutton').addEventListener('touchend', () => {
     stopMovingMobile()
+    preventDefault()
 });
 
 document.body.querySelector('.rightbutton').addEventListener('touchstart', () => {
     moveRightMobile()
+    preventDefault()
 });
 
 document.body.querySelector('.rightbutton').addEventListener('touchend', () => {
     stopMovingMobile()
+    preventDefault()
 });
 
 document.body.querySelector('.upbutton').addEventListener('click', () => {
